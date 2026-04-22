@@ -94,6 +94,7 @@
     .ticker {
       display: flex;
       gap: 0;
+      align-items: center;
       animation: ticker 30s linear infinite;
       white-space: nowrap;
     }
@@ -104,8 +105,10 @@
     .ticker-item {
       display: inline-flex;
       align-items: center;
-      gap: 1.5rem;
-      padding: 0 1.5rem;
+      gap: 2rem;
+      padding: 0 2rem;
+      white-space: nowrap;
+      line-height: 1;
     }
     .ticker-item span {
       font-family: 'Inter', sans-serif;
@@ -116,8 +119,11 @@
       color: var(--black);
     }
     .ticker-star {
-      color: rgba(0,0,0,0.35);
-      font-size: 0.5rem;
+      color: rgba(0,0,0,0.7);
+      font-size: 0.85rem;
+      display: inline-flex;
+      align-items: center;
+      vertical-align: middle;
     }
 
     /* ─── HERO ─── */
@@ -1266,16 +1272,16 @@
   <!-- ═══ TICKER ═══ -->
   <div class="ticker-wrap">
     <div class="ticker">
-      <div class="ticker-item"><span>Stable to Stage — Out Now</span><span class="ticker-star">★</span></div>
-      <div class="ticker-item"><span>New Merch Available</span><span class="ticker-star">★</span></div>
-      <div class="ticker-item"><span>Music Available for Licensing</span><span class="ticker-star">★</span></div>
-      <div class="ticker-item"><span>Southern Roots. LA Heat.</span><span class="ticker-star">★</span></div>
-      <div class="ticker-item"><span>Live at Rainbow Bar &amp; Grill — May 7</span><span class="ticker-star">★</span></div>
-      <div class="ticker-item"><span>Stable to Stage — Out Now</span><span class="ticker-star">★</span></div>
-      <div class="ticker-item"><span>New Merch Available</span><span class="ticker-star">★</span></div>
-      <div class="ticker-item"><span>Music Available for Licensing</span><span class="ticker-star">★</span></div>
-      <div class="ticker-item"><span>Southern Roots. LA Heat.</span><span class="ticker-star">★</span></div>
-      <div class="ticker-item"><span>Live at Rainbow Bar &amp; Grill — May 7</span><span class="ticker-star">★</span></div>
+      <div class="ticker-item"><span>Stable to Stage — Out Now</span></div><span class="ticker-star">★</span>
+      <div class="ticker-item"><span>New Merch Available</span></div><span class="ticker-star">★</span>
+      <div class="ticker-item"><span>Music Available for Licensing</span></div><span class="ticker-star">★</span>
+      <div class="ticker-item"><span>Southern Roots. LA Heat.</span></div><span class="ticker-star">★</span>
+      <div class="ticker-item"><span>Live at Rainbow Bar &amp; Grill — May 7</span></div><span class="ticker-star">★</span>
+      <div class="ticker-item"><span>Stable to Stage — Out Now</span></div><span class="ticker-star">★</span>
+      <div class="ticker-item"><span>New Merch Available</span></div><span class="ticker-star">★</span>
+      <div class="ticker-item"><span>Music Available for Licensing</span></div><span class="ticker-star">★</span>
+      <div class="ticker-item"><span>Southern Roots. LA Heat.</span></div><span class="ticker-star">★</span>
+      <div class="ticker-item"><span>Live at Rainbow Bar &amp; Grill — May 7</span></div><span class="ticker-star">★</span>
     </div>
   </div>
 
