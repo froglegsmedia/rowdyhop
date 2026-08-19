@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -313,43 +312,6 @@
     /* ─── BORDER RULE between sections ─── */
     .section-border {
       border-top: 1px solid var(--border);
-    }
-
-    /* ─── VIDEOS ─── */
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-    }
-    .video-card {
-      background: var(--card);
-      overflow: hidden;
-    }
-    .video-frame-wrap {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* 16:9 */
-      height: 0;
-      background: #000;
-    }
-    .video-frame-wrap iframe {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
-    }
-    .video-caption {
-      padding: 1rem 1.1rem 1.2rem;
-      font-family: 'Teko', sans-serif;
-      font-size: 1.3rem;
-      letter-spacing: 0.02em;
-      color: var(--text);
-      text-transform: uppercase;
-    }
-    @media (max-width: 800px) {
-      .video-grid { grid-template-columns: 1fr; }
     }
 
     /* ─── MERCH ─── */
@@ -1311,7 +1273,6 @@
     <ul class="nav-links" id="navLinks">
       <li><a href="#merch" onclick="closeMenu()">Merch</a></li>
       <li><a href="#music" onclick="closeMenu()">Music</a></li>
-      <li><a href="#videos" onclick="closeMenu()">Videos</a></li>
       <li><a href="#shows" onclick="closeMenu()">Shows</a></li>
       <li><a href="#about" onclick="closeMenu()">About</a></li>
       <li><a href="#" onclick="openContactModal(); closeMenu(); return false;">Contact</a></li>
@@ -1526,47 +1487,6 @@
 
       <div class="music-note">
         <strong>Sync &amp; Commercial Licensing</strong> — All Rowdy Hop tracks available for film, TV, ads, and digital campaigns. Custom rates, stems, and exclusive rights available. &nbsp;<a href="#" onclick="openModal(); return false;">Get in touch →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ VIDEOS ═══ -->
-  <section class="section-border" id="videos">
-    <div class="section-wrap">
-      <div class="section-eyebrow">
-        <div class="section-eyebrow-line"></div>
-        <div class="section-eyebrow-text">Watch</div>
-      </div>
-      <h2 class="section-title">Videos</h2>
-
-      <div class="video-grid">
-        <div class="video-card">
-          <div class="video-frame-wrap">
-            <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_1"
-              title="Rowdy Hop — Video 1" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-          <div class="video-caption">Video Title 1</div>
-        </div>
-        <div class="video-card">
-          <div class="video-frame-wrap">
-            <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_2"
-              title="Rowdy Hop — Video 2" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-          <div class="video-caption">Video Title 2</div>
-        </div>
-        <div class="video-card">
-          <div class="video-frame-wrap">
-            <iframe src="https://www.youtube-nocookie.com/embed/VIDEO_ID_3"
-              title="Rowdy Hop — Video 3" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-          <div class="video-caption">Video Title 3</div>
-        </div>
       </div>
     </div>
   </section>
