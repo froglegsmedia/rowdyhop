@@ -843,6 +843,22 @@
       margin-top: 0.2rem;
     }
 
+    .shows-soon {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--gold);
+      padding: 1.75rem 1.5rem;
+    }
+
+    .shows-soon p {
+      font-family: 'Teko', sans-serif;
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text);
+      line-height: 1;
+    }
+
     .tix-btn {
       display: inline-block;
       padding: 0.62rem 1.35rem;
@@ -1676,19 +1692,8 @@
       </div>
       <h2 class="section-title">Shows</h2>
 
-      <div class="show-list">
-        <div class="show">
-          <div class="show-date">
-            <div class="show-month">August</div>
-            <div class="show-day">29</div>
-            <div class="show-yr">2026</div>
-          </div>
-          <div>
-            <div class="show-venue">Universal Bar &amp; Grill</div>
-            <div class="show-loc">North Hollywood, CA</div>
-          </div>
-          <a href="https://partiful.com/e/Gtewzy03Gt2U0SNyLCRn?c=LVHOXcHj" target="_blank" class="tix-btn">$10</a>
-        </div>
+      <div class="shows-soon">
+        <p>Shows coming soon</p>
       </div>
     </div>
   </section>
