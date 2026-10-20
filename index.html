@@ -273,6 +273,45 @@
       transform: translateY(-2px);
     }
 
+    .hero-presave {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 1.35rem;
+    }
+
+    .hero-presave-kicker {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--gold2);
+    }
+
+    .btn-presave {
+      padding: 1.05rem 2.4rem;
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      box-shadow: 0 0 0 1px rgba(245,208,106,0.45), 0 0 28px rgba(232,184,75,0.55);
+      animation: presave-glow 2.2s ease-in-out infinite;
+    }
+
+    @keyframes presave-glow {
+      0%, 100% { box-shadow: 0 0 0 1px rgba(245,208,106,0.35), 0 0 16px rgba(232,184,75,0.4); }
+      50% { box-shadow: 0 0 0 1px rgba(245,208,106,0.85), 0 0 36px rgba(232,184,75,0.85); }
+    }
+
+    .btn-presave:hover {
+      box-shadow: 0 0 0 1px rgba(245,208,106,0.95), 0 0 42px rgba(232,184,75,0.9);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .btn-presave { animation: none; }
+    }
+
     /* ─── SECTIONS ─── */
     .section-wrap {
       max-width: 1080px;
@@ -536,6 +575,25 @@
       flex-wrap: wrap;
     }
 
+    .presave-section .section-wrap {
+      padding-top: 2.75rem;
+      padding-bottom: 2.75rem;
+    }
+
+    .presave-feature {
+      grid-template-columns: min(340px, 38%) 1fr;
+      margin-bottom: 0;
+      border-color: rgba(232,184,75,0.55);
+      background:
+        radial-gradient(ellipse at 18% 50%, rgba(201,144,26,0.14), transparent 58%),
+        var(--card);
+      box-shadow: 0 0 48px rgba(201,144,26,0.16);
+    }
+
+    .presave-feature .album-art {
+      box-shadow: 0 0 36px rgba(201,144,26,0.34), 0 12px 40px rgba(0,0,0,0.65);
+    }
+
     /* ─── TRACKS ─── */
     .track-list {
       display: flex;
@@ -783,6 +841,22 @@
       font-size: 0.67rem;
       color: #3a3a3a;
       margin-top: 0.2rem;
+    }
+
+    .shows-soon {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--gold);
+      padding: 1.75rem 1.5rem;
+    }
+
+    .shows-soon p {
+      font-family: 'Teko', sans-serif;
+      font-size: clamp(1.7rem, 3vw, 2.2rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text);
+      line-height: 1;
     }
 
     .tix-btn {
@@ -1212,6 +1286,7 @@
       .merch-grid { grid-template-columns: 1fr 1fr; }
       .album-feature { grid-template-columns: 1fr; text-align: center; }
       .album-art { max-width: 220px; margin: 0 auto; }
+      .presave-feature .album-art { max-width: min(320px, 78vw); }
       .album-btns { justify-content: center; }
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
       .about-photo { max-width: 100%; }
@@ -1265,6 +1340,17 @@
 
       /* Hero */
       #hero { padding: 3rem 1.25rem 2.5rem; min-height: auto; }
+      .hero-presave { margin-bottom: 1.1rem; width: 100%; }
+      .hero-presave-kicker { font-size: 0.55rem; letter-spacing: 0.14em; }
+      .btn-presave {
+        width: 100%;
+        max-width: 320px;
+        font-size: 0.66rem;
+        letter-spacing: 0.1em;
+        padding: 0.95rem 1rem;
+        white-space: nowrap;
+      }
+      .presave-section .section-wrap { padding: 2rem 1.25rem; }
       .hero-tagline { font-size: 0.75rem; }
       .hero-sub { font-size: 0.82rem; }
       .hero-btns { flex-direction: column; align-items: center; gap: 0.75rem; }
@@ -1345,6 +1431,11 @@
       <img class="hero-logo-img" src="rowdyhop-logo.png" alt="Rowdy Hop" />
     </div>
 
+    <div class="hero-presave">
+      <p class="hero-presave-kicker">New Single · Out November 6, 2026</p>
+      <a href="https://ditto.fm/country-style-rowdy-hop" target="_blank" rel="noopener" class="btn btn-gold btn-presave">Pre-Save Country Style</a>
+    </div>
+
 <div class="hero-ctas">
       <a href="#merch"  class="btn btn-gold">Shop Merch</a>
       <a href="#music"  class="btn btn-outline">License Music</a>
@@ -1376,6 +1467,28 @@
         <svg class="hero-social-icon" viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98l-.09.06c-.22.14-2.19 1.28-2.17 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
         Apple Music
       </a>
+    </div>
+  </section>
+
+  <!-- ═══ NEW SINGLE: COUNTRY STYLE ═══ -->
+  <section class="section-border presave-section" id="country-style">
+    <div class="section-wrap">
+      <div class="album-feature presave-feature">
+        <div class="album-art-block">
+          <div class="album-art">
+            <img src="country-style.jpg" alt="Country Style single cover by Rowdy Hop" />
+          </div>
+        </div>
+        <div>
+          <div class="album-info-eyebrow">★ New Single · November 6, 2026</div>
+          <div class="album-info-title">Country Style</div>
+          <div class="album-info-artist">Rowdy Hop</div>
+          <p class="album-info-desc">Out November 6, 2026. Pre-save now and be first to hear the new single the moment it drops.</p>
+          <div class="album-btns">
+            <a href="https://ditto.fm/country-style-rowdy-hop" target="_blank" rel="noopener" class="btn btn-gold">Pre-Save</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -1579,19 +1692,8 @@
       </div>
       <h2 class="section-title">Shows</h2>
 
-      <div class="show-list">
-        <div class="show">
-          <div class="show-date">
-            <div class="show-month">August</div>
-            <div class="show-day">29</div>
-            <div class="show-yr">2026</div>
-          </div>
-          <div>
-            <div class="show-venue">Universal Bar &amp; Grill</div>
-            <div class="show-loc">North Hollywood, CA</div>
-          </div>
-          <a href="https://partiful.com/e/Gtewzy03Gt2U0SNyLCRn?c=LVHOXcHj" target="_blank" class="tix-btn">$10</a>
-        </div>
+      <div class="shows-soon">
+        <p>Shows coming soon</p>
       </div>
     </div>
   </section>
