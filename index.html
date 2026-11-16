@@ -714,7 +714,9 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       width: 2.4rem;
       height: 2.4rem;
       border-radius: 50%;
-      font-size: 1rem;
+      padding: 0;
+      margin: 0;
+      line-height: 0;
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -723,13 +725,30 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       transition: background 0.15s;
     }
     .player-btn:hover { background: var(--gold2); }
+    .player-icon {
+      display: block;
+      width: 16px;
+      height: 16px;
+      fill: currentColor;
+      pointer-events: none;
+      flex: 0 0 auto;
+    }
+    /* Play triangle's visual weight sits left of its box, so nudge it right. */
+    .player-icon-play { transform: translateX(1px); }
+    .player-icon-pause { display: none; }
+    #playPauseBtn.is-playing .player-icon-play { display: none; }
+    #playPauseBtn.is-playing .player-icon-pause { display: block; }
     .player-btn.prev-btn, .player-btn.next-btn {
       background: transparent;
       border: 1px solid var(--border);
       color: var(--dim);
       width: 2rem;
       height: 2rem;
-      font-size: 0.8rem;
+    }
+    .player-btn.prev-btn .player-icon,
+    .player-btn.next-btn .player-icon {
+      width: 14px;
+      height: 14px;
     }
     .player-btn.prev-btn:hover, .player-btn.next-btn:hover { border-color: var(--gold); color: var(--gold); }
     .player-info { flex: 1; min-width: 0; }
@@ -2006,9 +2025,27 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
   <!-- ═══ STICKY PLAYER ═══ -->
   <div id="stickyPlayer">
-    <button class="player-btn prev-btn" onclick="prevTrack()">⏮</button>
-    <button class="player-btn" id="playPauseBtn" onclick="togglePlayPause()">▶</button>
-    <button class="player-btn next-btn" onclick="nextTrack()">⏭</button>
+    <button class="player-btn prev-btn" onclick="prevTrack()" aria-label="Previous">
+      <svg class="player-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="6.3" y="7" width="2" height="10" rx="0.4"/>
+        <polygon points="17.7,7 17.7,17 9.7,12"/>
+      </svg>
+    </button>
+    <button class="player-btn" id="playPauseBtn" onclick="togglePlayPause()" aria-label="Play">
+      <svg class="player-icon player-icon-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <polygon points="7,6 7,18 17,12"/>
+      </svg>
+      <svg class="player-icon player-icon-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <rect x="7.5" y="7" width="3" height="10" rx="0.4"/>
+        <rect x="13.5" y="7" width="3" height="10" rx="0.4"/>
+      </svg>
+    </button>
+    <button class="player-btn next-btn" onclick="nextTrack()" aria-label="Next">
+      <svg class="player-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <polygon points="6.3,7 6.3,17 14.3,12"/>
+        <rect x="15.7" y="7" width="2" height="10" rx="0.4"/>
+      </svg>
+    </button>
     <div class="player-info">
       <div class="player-title" id="playerTitle">—</div>
       <div class="player-artist">Rowdy Hop <span class="preview-label">Preview</span></div>
@@ -2096,7 +2133,9 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
     }
 
     function showTransport(playing) {
-      document.getElementById('playPauseBtn').textContent = playing ? '⏸' : '▶';
+      const btn = document.getElementById('playPauseBtn');
+      btn.classList.toggle('is-playing', playing);
+      btn.setAttribute('aria-label', playing ? 'Pause' : 'Play');
       if (currentIndex < 0) return;
       if (playing) tracks[currentIndex].classList.add('playing');
       else tracks[currentIndex].classList.remove('playing');
