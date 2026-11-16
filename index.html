@@ -410,7 +410,6 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
     .featured-video {
       background: var(--card);
       border: 1px solid var(--border);
-      border-top: 2px solid var(--gold);
       box-shadow: 0 0 30px rgba(201,144,26,0.12);
       margin-bottom: 1.5rem;
     }
@@ -2026,36 +2025,252 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
   <script>
     // ── Audio Player ──
     const audio = new Audio();
+    audio.crossOrigin = 'anonymous';
+    audio.preload = 'auto';
     const PREVIEW_SECONDS = 30;
+    const FADE_SECONDS = 2.5;
+    const HOOK_RATIO = 0.45;
     let currentIndex = -1;
-    let previewLock = false;
+    let previewStart = 0;
+    let previewLength = PREVIEW_SECONDS;
+    let pendingStart = false;
+    let wantPlaying = false;
+    let previewDone = false;
+    let ending = false;
+    let pauseToken = 0;
+    let placeAttempts = 0;
+    let audioCtx = null;
+    let gainNode = null;
+    let mediaSource = null;
+    let usingWebAudio = false;
+    let graphFailed = false;
+    let fallbackRaf = 0;
     const tracks = document.querySelectorAll('.track');
 
-    function previewLimit() {
+    function formatTime(s) {
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return m + ':' + (sec < 10 ? '0' : '') + sec;
+    }
+
+    function computeWindow() {
       const full = audio.duration;
-      if (!full || !isFinite(full)) return PREVIEW_SECONDS;
-      return Math.min(PREVIEW_SECONDS, full);
+      if (!full || !isFinite(full)) {
+        previewStart = 0;
+        previewLength = PREVIEW_SECONDS;
+        return;
+      }
+      previewLength = Math.min(PREVIEW_SECONDS, full);
+      let start = full * HOOK_RATIO;
+      const maxStart = Math.max(0, full - previewLength);
+      if (start > maxStart) start = maxStart;
+      if (start < 0) start = 0;
+      previewStart = start;
+    }
+
+    function previewElapsed() {
+      if (previewDone) return previewLength;
+      if (pendingStart || !audio.duration) return 0;
+      let elapsed = (audio.currentTime || 0) - previewStart;
+      if (!isFinite(elapsed) || elapsed < 0) elapsed = 0;
+      if (elapsed > previewLength) elapsed = previewLength;
+      return elapsed;
+    }
+
+    function gainAt(elapsed) {
+      const fade = Math.min(FADE_SECONDS, previewLength / 2);
+      const remain = previewLength - elapsed;
+      let level = 1;
+      if (elapsed < fade) level = Math.min(level, elapsed / fade);
+      if (remain < fade) level = Math.min(level, Math.max(0, remain) / fade);
+      if (!isFinite(level)) level = 0;
+      return Math.max(0, Math.min(1, level));
     }
 
     function paintProgress() {
-      const limit = previewLimit();
-      const time = Math.min(audio.currentTime || 0, limit);
-      const pct = limit ? (time / limit) * 100 : 0;
+      const elapsed = previewElapsed();
+      const pct = previewLength ? (elapsed / previewLength) * 100 : 0;
       document.getElementById('playerProgressFill').style.width = pct + '%';
-      document.getElementById('playerCurrent').textContent = formatTime(time);
-      document.getElementById('playerDuration').textContent = formatTime(limit);
+      document.getElementById('playerCurrent').textContent = formatTime(elapsed);
+      document.getElementById('playerDuration').textContent = formatTime(previewLength);
+    }
+
+    function showTransport(playing) {
+      document.getElementById('playPauseBtn').textContent = playing ? '⏸' : '▶';
+      if (currentIndex < 0) return;
+      if (playing) tracks[currentIndex].classList.add('playing');
+      else tracks[currentIndex].classList.remove('playing');
+    }
+
+    function ensureAudioGraph() {
+      if (usingWebAudio) return true;
+      if (graphFailed) return false;
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) { graphFailed = true; return false; }
+      try {
+        if (!audioCtx) audioCtx = new AC();
+        if (!mediaSource) {
+          mediaSource = audioCtx.createMediaElementSource(audio);
+          gainNode = audioCtx.createGain();
+          gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+          mediaSource.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
+        }
+        usingWebAudio = true;
+        audio.volume = 1;
+        return true;
+      } catch (err) {
+        graphFailed = true;
+        usingWebAudio = false;
+        return false;
+      }
+    }
+
+    function resumeContext() {
+      if (!audioCtx || audioCtx.state !== 'suspended') return Promise.resolve();
+      const pending = audioCtx.resume();
+      if (pending && pending.catch) pending.catch(function() {});
+      return pending || Promise.resolve();
+    }
+
+    function stopFallback() {
+      if (fallbackRaf) cancelAnimationFrame(fallbackRaf);
+      fallbackRaf = 0;
+    }
+
+    function startFallback() {
+      stopFallback();
+      if (usingWebAudio) return;
+      const tick = function() {
+        if (!wantPlaying || audio.paused || pendingStart) return;
+        audio.volume = gainAt(previewElapsed());
+        fallbackRaf = requestAnimationFrame(tick);
+      };
+      fallbackRaf = requestAnimationFrame(tick);
+    }
+
+    function hardMute() {
+      stopFallback();
+      if (usingWebAudio && gainNode && audioCtx) {
+        const g = gainNode.gain;
+        const t = audioCtx.currentTime;
+        g.cancelScheduledValues(t);
+        g.setValueAtTime(0, t);
+      } else {
+        audio.volume = 0;
+      }
+    }
+
+    function cancelPendingPause() {
+      pauseToken++;
+    }
+
+    function softPause() {
+      const token = ++pauseToken;
+      stopFallback();
+      if (usingWebAudio && gainNode && audioCtx) {
+        const g = gainNode.gain;
+        const t = audioCtx.currentTime;
+        g.cancelScheduledValues(t);
+        g.setValueAtTime(g.value, t);
+        g.linearRampToValueAtTime(0, t + 0.05);
+        setTimeout(function() {
+          if (token !== pauseToken) return;
+          audio.pause();
+          if (gainNode && audioCtx) {
+            const gt = audioCtx.currentTime;
+            gainNode.gain.cancelScheduledValues(gt);
+            gainNode.gain.setValueAtTime(0, gt);
+          }
+        }, 60);
+      } else {
+        audio.volume = 0;
+        audio.pause();
+      }
+    }
+
+    function schedulePreviewEnvelope() {
+      if (!wantPlaying || pendingStart || audio.paused) return;
+      const fade = Math.min(FADE_SECONDS, previewLength / 2);
+      const elapsed = Math.max(0, Math.min(previewLength, (audio.currentTime || 0) - previewStart));
+      const remain = Math.max(0, previewStart + previewLength - (audio.currentTime || 0));
+      if (remain <= 0.02) {
+        hardMute();
+        return;
+      }
+      if (!(usingWebAudio && gainNode && audioCtx)) {
+        startFallback();
+        return;
+      }
+      const g = gainNode.gain;
+      const t = audioCtx.currentTime;
+      g.cancelScheduledValues(t);
+      g.setValueAtTime(g.value, t);
+      const join = Math.min(0.03, remain);
+      g.linearRampToValueAtTime(gainAt(Math.min(previewLength, elapsed + join)), t + join);
+      const t0 = t + join;
+      const elapsed0 = elapsed + join;
+      if (elapsed0 < fade) {
+        g.linearRampToValueAtTime(1, t0 + (fade - elapsed0));
+      }
+      const fadeOutElapsed = previewLength - fade;
+      if (elapsed0 < fadeOutElapsed) {
+        const fadeOutAt = t0 + (fadeOutElapsed - elapsed0);
+        g.linearRampToValueAtTime(1, fadeOutAt);
+        g.linearRampToValueAtTime(0, fadeOutAt + fade);
+      } else {
+        g.linearRampToValueAtTime(0, t0 + Math.max(0.01, remain - join));
+      }
+    }
+
+    function armEnvelope() {
+      if (!wantPlaying || pendingStart || audio.paused) return;
+      schedulePreviewEnvelope();
+    }
+
+    function placeAtPreviewStart() {
+      computeWindow();
+      paintProgress();
+      const target = previewStart;
+      if (Math.abs((audio.currentTime || 0) - target) > 0.35) {
+        placeAttempts++;
+        if (placeAttempts > 4) {
+          pendingStart = false;
+          armEnvelope();
+          return;
+        }
+        try { audio.currentTime = target; } catch (err) {}
+        return;
+      }
+      placeAttempts = 0;
+      pendingStart = false;
+      armEnvelope();
     }
 
     function endPreview() {
-      if (previewLock) return;
-      previewLock = true;
-      const limit = previewLimit();
+      if (ending) return;
+      ending = true;
+      pendingStart = false;
+      previewDone = true;
+      wantPlaying = false;
+      cancelPendingPause();
+      hardMute();
       audio.pause();
-      if (audio.currentTime > limit) audio.currentTime = limit;
-      document.getElementById('playPauseBtn').textContent = '▶';
-      if (currentIndex >= 0) tracks[currentIndex].classList.remove('playing');
+      const end = previewStart + previewLength;
+      if (audio.duration && !audio.ended && audio.currentTime > end + 0.2) {
+        try { audio.currentTime = end; } catch (err) {}
+      }
+      showTransport(false);
       paintProgress();
-      previewLock = false;
+      ending = false;
+    }
+
+    function playFromGesture() {
+      const pending = audio.play();
+      if (pending && pending.catch) pending.catch(function() {});
+      resumeContext().then(function() {
+        armEnvelope();
+      });
     }
 
     function playTrack(index) {
@@ -2063,35 +2278,60 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       const src = track.getAttribute('data-src');
       const title = track.getAttribute('data-title');
 
-      if (currentIndex === index) {
+      if (currentIndex === index && audio.src) {
         togglePlayPause();
         return;
       }
 
-      // clear previous
-      tracks.forEach(t => t.classList.remove('playing'));
+      cancelPendingPause();
+      ensureAudioGraph();
+      resumeContext();
+      hardMute();
+      audio.pause();
+      tracks.forEach(function(t) { t.classList.remove('playing'); });
       currentIndex = index;
       track.classList.add('playing');
+      wantPlaying = true;
+      previewDone = false;
+      pendingStart = true;
+      placeAttempts = 0;
+      previewStart = 0;
+      previewLength = PREVIEW_SECONDS;
 
       audio.src = src;
-      audio.play();
-      document.getElementById('playPauseBtn').textContent = '⏸';
+      playFromGesture();
+      if (audio.readyState >= 1) placeAtPreviewStart();
+
+      showTransport(true);
       document.getElementById('playerTitle').textContent = title;
       document.getElementById('playerDuration').textContent = formatTime(PREVIEW_SECONDS);
+      document.getElementById('playerCurrent').textContent = formatTime(0);
+      document.getElementById('playerProgressFill').style.width = '0%';
       document.getElementById('stickyPlayer').classList.add('visible');
     }
 
     function togglePlayPause() {
-      if (audio.paused) {
-        if (audio.currentTime >= previewLimit() - 0.05) audio.currentTime = 0;
-        audio.play();
-        document.getElementById('playPauseBtn').textContent = '⏸';
-        if (currentIndex >= 0) tracks[currentIndex].classList.add('playing');
-      } else {
-        audio.pause();
-        document.getElementById('playPauseBtn').textContent = '▶';
-        if (currentIndex >= 0) tracks[currentIndex].classList.remove('playing');
+      if (currentIndex < 0 || !audio.src) return;
+      cancelPendingPause();
+      ensureAudioGraph();
+      resumeContext();
+      if (wantPlaying && !audio.paused) {
+        wantPlaying = false;
+        showTransport(false);
+        softPause();
+        return;
       }
+      wantPlaying = true;
+      showTransport(true);
+      if (previewDone || (audio.duration && audio.currentTime >= previewStart + previewLength - 0.08)) {
+        previewDone = false;
+        pendingStart = true;
+        placeAttempts = 0;
+        hardMute();
+        try { audio.currentTime = previewStart; } catch (err) {}
+      }
+      playFromGesture();
+      if (!pendingStart) armEnvelope();
     }
 
     function nextTrack() {
@@ -2100,51 +2340,89 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
     }
 
     function prevTrack() {
-      if (audio.currentTime > 3) { audio.currentTime = 0; return; }
+      const elapsed = pendingStart || !audio.duration ? 0 : (audio.currentTime - previewStart);
+      if (currentIndex >= 0 && elapsed > 3) {
+        cancelPendingPause();
+        ensureAudioGraph();
+        resumeContext();
+        wantPlaying = true;
+        previewDone = false;
+        pendingStart = true;
+        placeAttempts = 0;
+        hardMute();
+        showTransport(true);
+        try { audio.currentTime = previewStart; } catch (err) {}
+        if (audio.paused) playFromGesture();
+        return;
+      }
       const prev = (currentIndex - 1 + tracks.length) % tracks.length;
       playTrack(prev);
     }
 
-    function formatTime(s) {
-      const m = Math.floor(s / 60);
-      const sec = Math.floor(s % 60);
-      return m + ':' + (sec < 10 ? '0' : '') + sec;
-    }
-
-    audio.addEventListener('timeupdate', () => {
-      if (!audio.duration) return;
-      if (audio.currentTime >= previewLimit()) {
+    function seekAudio(e) {
+      if (!audio.duration || pendingStart || !previewLength) return;
+      const bar = document.getElementById('playerProgressBar');
+      const pct = Math.min(1, Math.max(0, e.offsetX / bar.offsetWidth));
+      const elapsed = pct * previewLength;
+      if (elapsed >= previewLength - 0.05) {
+        try { audio.currentTime = previewStart + previewLength; } catch (err) {}
         endPreview();
         return;
       }
-      paintProgress();
-    });
+      previewDone = false;
+      try { audio.currentTime = previewStart + elapsed; } catch (err) {}
+    }
 
-    audio.addEventListener('seeked', () => {
-      if (audio.currentTime > previewLimit()) endPreview();
+    audio.addEventListener('loadedmetadata', function() {
+      if (pendingStart) placeAtPreviewStart();
       else paintProgress();
     });
 
-    audio.addEventListener('loadedmetadata', () => {
-      paintProgress();
+    audio.addEventListener('loadeddata', function() {
+      if (pendingStart) placeAtPreviewStart();
     });
 
-    audio.addEventListener('ended', () => {
-      if (audio.duration && audio.duration <= PREVIEW_SECONDS + 0.05) nextTrack();
-    });
-
-    function seekAudio(e) {
-      const bar = document.getElementById('playerProgressBar');
-      const pct = Math.min(1, Math.max(0, e.offsetX / bar.offsetWidth));
-      const limit = previewLimit();
-      const next = pct * limit;
-      if (next >= limit) {
-        audio.currentTime = limit;
+    audio.addEventListener('seeked', function() {
+      if (ending) { paintProgress(); return; }
+      if (pendingStart) {
+        if (!audio.duration) return;
+        if (Math.abs((audio.currentTime || 0) - previewStart) > 0.75) return;
+        placeAttempts = 0;
+        pendingStart = false;
+        paintProgress();
+        armEnvelope();
+        return;
+      }
+      if (audio.duration && audio.currentTime > previewStart + previewLength + 0.08) {
         endPreview();
         return;
       }
-      audio.currentTime = next;
-    }
+      if (audio.duration && audio.currentTime < previewStart - 0.25) {
+        try { audio.currentTime = previewStart; } catch (err) {}
+        return;
+      }
+      paintProgress();
+      armEnvelope();
+    });
+
+    audio.addEventListener('playing', function() {
+      armEnvelope();
+    });
+
+    audio.addEventListener('timeupdate', function() {
+      if (!audio.duration || pendingStart || ending) return;
+      if (wantPlaying && audio.currentTime >= previewStart + previewLength - 0.03) {
+        endPreview();
+        return;
+      }
+      paintProgress();
+    });
+
+    audio.addEventListener('ended', function() {
+      const short = audio.duration && audio.duration <= PREVIEW_SECONDS + 0.05;
+      endPreview();
+      if (short) nextTrack();
+    });
   </script>
 </body>
 </html>
