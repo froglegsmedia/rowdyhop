@@ -407,6 +407,55 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       .video-grid { grid-template-columns: 1fr; }
     }
 
+    #videos { scroll-margin-top: 82px; }
+    .featured-video-heading {
+      margin-bottom: 0.4rem;
+    }
+    .featured-video-title {
+      font-family: 'Teko', sans-serif;
+      font-size: clamp(1.5rem, 3.4vw, 2.15rem);
+      color: var(--gold2);
+      line-height: 1.05;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    @media (max-width: 600px) {
+      .featured-video-kind { display: block; }
+    }
+    .featured-video {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--gold);
+      box-shadow: 0 0 30px rgba(201,144,26,0.12);
+      margin-bottom: 3rem;
+    }
+    .featured-video-link-row {
+      padding: 0.85rem 1.15rem 1rem;
+    }
+    .featured-video-link-row a {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      text-decoration: none;
+    }
+    .featured-video-link-row a:hover { color: var(--gold3); }
+    .more-videos-title {
+      font-family: 'Teko', sans-serif;
+      font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+      color: var(--text);
+      line-height: 1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+    @media (max-width: 600px) {
+      .featured-video { margin-bottom: 2.25rem; }
+      .featured-video-link-row { padding: 0.8rem 1rem 0.95rem; }
+    }
+
     /* ─── MERCH ─── */
     .merch-grid {
       display: grid;
@@ -1487,6 +1536,61 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
     </div>
   </section>
 
+  <!-- ═══ VIDEOS ═══ -->
+  <section class="section-border" id="videos">
+    <div class="section-wrap">
+      <div class="section-eyebrow">
+        <div class="section-eyebrow-line"></div>
+        <div class="section-eyebrow-text">Watch</div>
+      </div>
+      <h2 class="section-title featured-video-heading">Featured Video</h2>
+      <p class="featured-video-title">Rowdy Girl <span class="featured-video-kind">(Official Music Video)</span></p>
+
+      <div class="featured-video">
+        <div class="video-frame-wrap">
+          <iframe src="https://www.youtube-nocookie.com/embed/w4KOteA2h4Q"
+            title="Rowdy Girl (Official Music Video)" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+        <p class="featured-video-link-row">
+          <a href="https://www.youtube.com/watch?v=w4KOteA2h4Q" target="_blank" rel="noopener">Watch on YouTube</a>
+        </p>
+      </div>
+
+      <h3 class="more-videos-title">More Videos</h3>
+      <div class="video-grid">
+        <div class="video-card">
+          <div class="video-frame-wrap">
+            <iframe src="https://www.youtube-nocookie.com/embed/uMp0cNxzTvc"
+              title="Hometown" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-caption">Hometown</div>
+        </div>
+        <div class="video-card">
+          <div class="video-frame-wrap">
+            <iframe src="https://www.youtube-nocookie.com/embed/0sBuprhJK6o"
+              title="Frog Legs" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-caption">Frog Legs</div>
+        </div>
+        <div class="video-card">
+          <div class="video-frame-wrap">
+            <iframe src="https://www.youtube-nocookie.com/embed/Hfv1PiK9Tc4"
+              title="Get Rowdy Get Low" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-caption">Get Rowdy Get Low</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ═══ NEW SINGLE: COUNTRY STYLE ═══ -->
   <section class="section-border presave-section" id="country-style">
     <div class="section-wrap">
@@ -1655,47 +1759,6 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
       <div class="music-note">
         <strong>Sync &amp; Commercial Licensing</strong> — All Rowdy Hop tracks available for film, TV, ads, and digital campaigns. Custom rates, stems, and exclusive rights available. &nbsp;<a href="#" onclick="openModal(); return false;">Get in touch →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ VIDEOS ═══ -->
-  <section class="section-border" id="videos">
-    <div class="section-wrap">
-      <div class="section-eyebrow">
-        <div class="section-eyebrow-line"></div>
-        <div class="section-eyebrow-text">Watch</div>
-      </div>
-      <h2 class="section-title">Videos</h2>
-
-      <div class="video-grid">
-        <div class="video-card">
-          <div class="video-frame-wrap">
-            <iframe src="https://www.youtube-nocookie.com/embed/uMp0cNxzTvc"
-              title="Hometown" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-          <div class="video-caption">Hometown</div>
-        </div>
-        <div class="video-card">
-          <div class="video-frame-wrap">
-            <iframe src="https://www.youtube-nocookie.com/embed/0sBuprhJK6o"
-              title="Frog Legs" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-          <div class="video-caption">Frog Legs</div>
-        </div>
-        <div class="video-card">
-          <div class="video-frame-wrap">
-            <iframe src="https://www.youtube-nocookie.com/embed/Hfv1PiK9Tc4"
-              title="Get Rowdy Get Low" frameborder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-              allowfullscreen loading="lazy"></iframe>
-          </div>
-          <div class="video-caption">Get Rowdy Get Low</div>
-        </div>
       </div>
     </div>
   </section>
