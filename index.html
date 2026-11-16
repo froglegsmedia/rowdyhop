@@ -174,9 +174,26 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       content: '';
       position: absolute;
       inset: 0;
-      background: url('rainbow pic.jpg') center center / cover no-repeat;
-      opacity: 0.28;
+      background: linear-gradient(180deg, rgba(8,8,8,0.42) 0%, rgba(8,8,8,0.28) 42%, rgba(8,8,8,0.62) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       z-index: 0;
+      background: #080808 url('assets/video/rowdy-hop-hero-poster.jpg') center center / cover no-repeat;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-video { display: none; }
+      #hero {
+        background: #080808 url('assets/video/rowdy-hop-hero-poster.jpg') center center / cover no-repeat;
+      }
     }
 
     /* Subtle radial glow beneath the logo */
@@ -190,6 +207,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       left: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
+      z-index: 1;
     }
 
     /* The big hero logo */
@@ -252,10 +270,30 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
     .hero-social-link:hover { color: var(--gold2); }
 
-    .hero-social-icon {
-      font-size: 1.3rem;
+    .hero-sound {
+      position: relative;
+      z-index: 2;
+      margin-top: 1.75rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      padding: 0.75rem 1.15rem;
+      background: rgba(8,8,8,0.62);
+      color: var(--gold2);
+      border: 1px solid var(--gold);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
       line-height: 1;
+      cursor: pointer;
     }
+    .hero-sound:hover { color: var(--gold3); border-color: var(--gold2); }
+    .hero-sound-icon { width: 18px; height: 18px; display: block; flex: 0 0 auto; }
+    .hero-sound.is-playing .hero-sound-on { display: none; }
+    .hero-sound:not(.is-playing) .hero-sound-off { display: none; }
 
     /* ─── BUTTONS ─── */
     .btn {
@@ -1463,6 +1501,14 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       .hero-social-icon { font-size: 1.1rem; }
       .hero-btns .btn { width: 100%; max-width: 280px; }
       .hero-socials { gap: 1rem; }
+      .hero-sound {
+        margin-top: 1.35rem;
+        width: 100%;
+        max-width: 320px;
+        min-height: 44px;
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+      }
 
       /* Sections */
       .section-inner { padding: 4rem 1.25rem; }
@@ -1530,6 +1576,9 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
   <!-- ═══ HERO ═══ -->
   <section id="hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" poster="assets/video/rowdy-hop-hero-poster.jpg">
+      <source src="assets/video/rowdy-hop-hero-mix3.mp4" type="video/mp4" />
+    </video>
     <div class="hero-glow"></div>
 
     <!-- Full hero logo — real PNG -->
@@ -1574,6 +1623,17 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
         Apple Music
       </a>
     </div>
+
+    <button type="button" class="hero-sound" id="heroSound" aria-pressed="false" aria-label="Play Rowdy Girl">
+      <svg class="hero-sound-icon hero-sound-on" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4zm11.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 15.5 12zM13 3.23v2.06a6.99 6.99 0 0 1 0 13.42v2.06A9 9 0 0 0 13 3.23z"/>
+      </svg>
+      <svg class="hero-sound-icon hero-sound-off" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4zm13.59 3L20 9.59 18.41 8 16 10.41 13.59 8 12 9.59 14.41 12 12 14.41 13.59 16 16 13.59 18.41 16 20 14.41 17.59 12z"/>
+      </svg>
+      <span class="hero-sound-label">Play Rowdy Girl</span>
+    </button>
+    <audio id="heroSong" preload="auto" src="assets/audio/rowdy-girl.mp3"></audio>
   </section>
 
   <!-- ═══ NEW SINGLE: COUNTRY STYLE ═══ -->
@@ -2494,6 +2554,55 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       endPreview();
       if (short) nextTrack();
     });
+  </script>
+  <script>
+    (function () {
+      var video = document.querySelector('.hero-video');
+      var song = document.getElementById('heroSong');
+      var button = document.getElementById('heroSound');
+      var label = button.querySelector('.hero-sound-label');
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (video) {
+        video.muted = true;
+        video.defaultMuted = true;
+        if (reduceMotion) {
+          video.removeAttribute('autoplay');
+          video.pause();
+        } else {
+          var started = video.play();
+          if (started && started.catch) started.catch(function () {});
+        }
+      }
+
+      function setSoundUi(playing) {
+        button.classList.toggle('is-playing', playing);
+        button.setAttribute('aria-pressed', playing ? 'true' : 'false');
+        button.setAttribute('aria-label', playing ? 'Mute' : 'Play Rowdy Girl');
+        label.textContent = playing ? 'Mute' : 'Play Rowdy Girl';
+      }
+
+      function tryStartSong() {
+        var pending = song.play();
+        if (pending && pending.then) {
+          pending.then(function () { setSoundUi(!song.paused); }).catch(function () { setSoundUi(false); });
+        } else {
+          setSoundUi(!song.paused);
+        }
+      }
+
+      button.addEventListener('click', function () {
+        if (song.paused) tryStartSong();
+        else {
+          song.pause();
+          setSoundUi(false);
+        }
+      });
+
+      song.addEventListener('ended', function () { setSoundUi(false); });
+
+      tryStartSong();
+    })();
   </script>
 </body>
 </html>
