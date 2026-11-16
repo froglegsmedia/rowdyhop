@@ -407,6 +407,52 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       .video-grid { grid-template-columns: 1fr; }
     }
 
+    .featured-video {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 2px solid var(--gold);
+      box-shadow: 0 0 30px rgba(201,144,26,0.12);
+      margin-bottom: 1.5rem;
+    }
+    .featured-video-meta {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 0.75rem 1.25rem;
+      flex-wrap: wrap;
+      padding: 1rem 1.15rem 1.15rem;
+    }
+    .featured-video-kicker {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+    .featured-video-title {
+      font-family: 'Teko', sans-serif;
+      font-size: clamp(1.6rem, 3.2vw, 2.2rem);
+      color: var(--gold2);
+      line-height: 1;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .featured-video-link {
+      font-size: 0.62rem;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold2);
+      text-decoration: none;
+      white-space: nowrap;
+    }
+    .featured-video-link:hover { color: var(--gold3); }
+    @media (max-width: 600px) {
+      .featured-video-kind { display: block; }
+      .featured-video-link { white-space: normal; }
+    }
+
     /* ─── MERCH ─── */
     .merch-grid {
       display: grid;
@@ -1668,6 +1714,22 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       </div>
       <h2 class="section-title">Videos</h2>
 
+      <div class="featured-video">
+        <div class="video-frame-wrap">
+          <iframe src="https://www.youtube-nocookie.com/embed/w4KOteA2h4Q"
+            title="Rowdy Girl (Official Music Video)" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="featured-video-meta">
+          <div>
+            <div class="featured-video-kicker">Featured Video</div>
+            <div class="featured-video-title">Rowdy Girl <span class="featured-video-kind">(Official Music Video)</span></div>
+          </div>
+          <a class="featured-video-link" href="https://www.youtube.com/watch?v=w4KOteA2h4Q" target="_blank" rel="noopener">Watch on YouTube</a>
+        </div>
+      </div>
+
       <div class="video-grid">
         <div class="video-card">
           <div class="video-frame-wrap">
@@ -1695,6 +1757,15 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
               allowfullscreen loading="lazy"></iframe>
           </div>
           <div class="video-caption">Get Rowdy Get Low</div>
+        </div>
+        <div class="video-card">
+          <div class="video-frame-wrap">
+            <iframe src="https://www.youtube-nocookie.com/embed/KrrFKRpqm48"
+              title="Country Style" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-caption">Country Style</div>
         </div>
       </div>
     </div>
