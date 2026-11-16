@@ -1106,7 +1106,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
     }
 
     .wc-horse {
-      background: #1a3a6b;
+      background: #090909;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1115,15 +1115,31 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       min-height: 480px;
     }
 
+    .wc-horse::before {
+      content: '';
+      position: absolute;
+      width: min(58%, 340px);
+      height: min(58%, 340px);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(224, 98, 32, 0.42) 0%, rgba(160, 36, 18, 0.16) 46%, transparent 72%);
+      pointer-events: none;
+    }
+
     .wc-horse-img {
-      width: 80%;
-      max-width: 360px;
+      position: relative;
+      z-index: 1;
+      width: auto;
+      height: 420px;
+      max-width: 78%;
       display: block;
       object-fit: contain;
+      filter: drop-shadow(0 0 22px rgba(224, 110, 36, 0.32));
     }
 
     .wc-content {
-      background: #C63A2A;
+      background:
+        radial-gradient(ellipse at 85% 0%, rgba(255, 176, 72, 0.22), transparent 48%),
+        linear-gradient(165deg, #e06a22 0%, #c13a16 36%, #8d1c12 70%, #2a0908 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -1198,7 +1214,8 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
     @media (max-width: 700px) {
       .wc-section { grid-template-columns: 1fr; }
-      .wc-horse { min-height: 300px; }
+      .wc-horse { min-height: 340px; }
+      .wc-horse-img { height: 280px; max-width: 70%; }
       .wc-content { padding: 3rem 2rem; }
     }
 
@@ -1834,15 +1851,15 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
     </div>
   </section>
 
-  <!-- ═══ WINNER'S CIRCLE ═══ -->
+  <!-- ═══ JOIN THE ROWDIES ═══ -->
   <div class="wc-section">
     <div class="wc-horse">
-      <img src="rowdy 3.png" alt="Rowdy" class="wc-horse-img" />
+      <img src="fire-horse-emblem.svg" alt="Rowdyland fire horse emblem" class="wc-horse-img" />
     </div>
     <div class="wc-content">
-      <div class="wc-eyebrow">★ Exclusive Access ★</div>
-      <h2 class="wc-title">Join the<br>Winner's Circle</h2>
-      <p class="wc-desc">This isn't just a list. It's the inside track — merch drops before anyone else, show announcements, unreleased music, and stories from the road. Built for the ones who feel like they're meant for something bigger.</p>
+      <div class="wc-eyebrow">★ The Inner Circle ★</div>
+      <h2 class="wc-title">Join the<br>Rowdies</h2>
+      <p class="wc-desc">This isn't a list. It's the herd. Merch drops before anyone else, show announcements, unreleased music, and stories from the road. For the ones who rise from the fire.</p>
       <a href="https://join.rowdyhop.com/" target="_blank" class="wc-btn">Get In →</a>
     </div>
   </div>
