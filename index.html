@@ -935,6 +935,30 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       line-height: 1;
     }
 
+    .shows-rowdyland {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.15rem;
+    }
+
+    .shows-rowdyland-logo {
+      display: block;
+      width: min(440px, 100%);
+      height: auto;
+    }
+
+    .shows-soon .shows-rowdyland-line {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      line-height: 1.6;
+      color: var(--dim);
+      max-width: 36rem;
+    }
+
     .tix-btn {
       display: inline-block;
       padding: 0.62rem 1.35rem;
@@ -1453,6 +1477,8 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       /* Shows */
       .show { grid-template-columns: 52px 1fr; gap: 1rem; padding: 1.25rem; }
       .show-day { font-size: 1.5rem; }
+      .shows-rowdyland { gap: 1rem; }
+      .shows-soon .shows-rowdyland-line { font-size: 0.9rem; }
 
       /* Modals */
       .modal-box { padding: 2rem 1.25rem; margin: 1rem; }
@@ -1804,8 +1830,10 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       </div>
       <h2 class="section-title">Shows</h2>
 
-      <div class="shows-soon">
-        <p>New dates coming soon</p>
+      <div class="shows-soon shows-rowdyland">
+        <img class="shows-rowdyland-logo" src="assets/rowdyland-logo-distressed.png" alt="Rowdyland" />
+        <p class="shows-rowdyland-line">A place is being built. Rowdyland: our home, our festival, coming soon.</p>
+        <a class="tix-btn" href="https://rowdyland.com" target="_blank" rel="noopener">Visit Rowdyland</a>
       </div>
     </div>
   </section>
