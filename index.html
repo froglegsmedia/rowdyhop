@@ -667,7 +667,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
     .track {
       display: grid;
-      grid-template-columns: 2.25rem 1fr auto auto;
+      grid-template-columns: 2.25rem 1fr;
       align-items: center;
       gap: 1.25rem;
       padding: 1rem 1.25rem;
@@ -777,6 +777,21 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       letter-spacing: 0.01em;
     }
 
+    .preview-label {
+      display: inline-block;
+      margin-left: 0.5rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.56rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.12rem 0.4rem;
+      border: 1px solid var(--gold);
+      color: var(--gold2);
+      vertical-align: 0.12em;
+      line-height: 1.2;
+    }
+
     .track-meta {
       font-size: 0.67rem;
       color: var(--muted);
@@ -802,26 +817,6 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
     .badge-gold {
       border-color: var(--gold);
       color: var(--gold2);
-    }
-
-    .track-license-btn {
-      font-size: 0.6rem;
-      font-weight: 800;
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      padding: 0.38rem 0.9rem;
-      background: transparent;
-      color: var(--gold2);
-      border: 1px solid var(--gold);
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.18s;
-      white-space: nowrap;
-      font-family: 'Inter', sans-serif;
-    }
-    .track-license-btn:hover {
-      background: rgba(232,184,75,0.1);
-      border-color: var(--gold2);
     }
 
     .music-note {
@@ -1428,7 +1423,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       .section-title { margin-bottom: 2rem; }
 
       /* Tracks */
-      .track { grid-template-columns: 2rem 1fr auto; gap: 0.75rem; padding: 0.85rem 1rem; }
+      .track { grid-template-columns: 2rem 1fr; gap: 0.75rem; padding: 0.85rem 1rem; }
       .track-badges { display: none; }
 
       /* Album */
@@ -1649,53 +1644,43 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       <div class="track-list">
         <div class="track" onclick="playTrack(0)" data-src="https://pub-86f08407ece2488cba6b2b5d1f533af7.r2.dev/01-Saddle-Up.mp3" data-title="Saddle Up">
           <div class="track-n"><span class="track-num-text">01</span><span class="track-play-icon">▶</span></div>
-          <div><div class="track-title">Saddle Up</div></div>
-          <a href="#" onclick="openModal(); event.stopPropagation(); return false;" class="track-license-btn">License →</a>
+          <div><div class="track-title">Saddle Up <span class="preview-label">Preview</span></div></div>
         </div>
         <div class="track" onclick="playTrack(1)" data-src="https://pub-86f08407ece2488cba6b2b5d1f533af7.r2.dev/02-Barn-to-the-Boulevard.mp3" data-title="Barn to the Boulevard">
           <div class="track-n"><span class="track-num-text">02</span><span class="track-play-icon">▶</span></div>
-          <div><div class="track-title">Barn to the Boulevard</div></div>
-          <a href="#" onclick="openModal(); event.stopPropagation(); return false;" class="track-license-btn">License →</a>
+          <div><div class="track-title">Barn to the Boulevard <span class="preview-label">Preview</span></div></div>
         </div>
         <div class="track" onclick="playTrack(2)" data-src="https://pub-86f08407ece2488cba6b2b5d1f533af7.r2.dev/03-Get-Rowdy-Get-Low.mp3" data-title="Get Rowdy Get Low">
           <div class="track-n"><span class="track-num-text">03</span><span class="track-play-icon">▶</span></div>
-          <div><div class="track-title">Get Rowdy Get Low</div></div>
-          <a href="#" onclick="openModal(); event.stopPropagation(); return false;" class="track-license-btn">License →</a>
+          <div><div class="track-title">Get Rowdy Get Low <span class="preview-label">Preview</span></div></div>
         </div>
         <div class="track" onclick="playTrack(3)" data-src="https://pub-86f08407ece2488cba6b2b5d1f533af7.r2.dev/04-Fixing-Myself.mp3" data-title="Fixing Myself">
           <div class="track-n"><span class="track-num-text">04</span><span class="track-play-icon">▶</span></div>
-          <div><div class="track-title">Fixing Myself</div></div>
-          <a href="#" onclick="openModal(); event.stopPropagation(); return false;" class="track-license-btn">License →</a>
+          <div><div class="track-title">Fixing Myself <span class="preview-label">Preview</span></div></div>
         </div>
         <div class="track" onclick="playTrack(4)" data-src="https://pub-86f08407ece2488cba6b2b5d1f533af7.r2.dev/05-%231-Champion.mp3" data-title="#1 Champion">
           <div class="track-n"><span class="track-num-text">05</span><span class="track-play-icon">▶</span></div>
-          <div><div class="track-title">#1 Champion</div></div>
-          <a href="#" onclick="openModal(); event.stopPropagation(); return false;" class="track-license-btn">License →</a>
+          <div><div class="track-title">#1 Champion <span class="preview-label">Preview</span></div></div>
         </div>
         <div class="track" onclick="playTrack(5)" data-src="https://pub-86f08407ece2488cba6b2b5d1f533af7.r2.dev/06-Rowdy.mp3" data-title="Rowdy">
           <div class="track-n"><span class="track-num-text">06</span><span class="track-play-icon">▶</span></div>
-          <div><div class="track-title">Rowdy</div></div>
-          <a href="#" onclick="openModal(); event.stopPropagation(); return false;" class="track-license-btn">License →</a>
+          <div><div class="track-title">Rowdy <span class="preview-label">Preview</span></div></div>
         </div>
         <div class="track" onclick="playTrack(6)" data-src="https://pub-86f08407ece2488cba6b2b5d1f533af7.r2.dev/07-Ready-to-Run.mp3" data-title="Ready to Run">
           <div class="track-n"><span class="track-num-text">07</span><span class="track-play-icon">▶</span></div>
-          <div><div class="track-title">Ready to Run</div></div>
-          <a href="#" onclick="openModal(); event.stopPropagation(); return false;" class="track-license-btn">License →</a>
+          <div><div class="track-title">Ready to Run <span class="preview-label">Preview</span></div></div>
         </div>
         <div class="track" onclick="playTrack(7)" data-src="https://pub-86f08407ece2488cba6b2b5d1f533af7.r2.dev/08-Wild-Horse.mp3" data-title="Wild Horse">
           <div class="track-n"><span class="track-num-text">08</span><span class="track-play-icon">▶</span></div>
-          <div><div class="track-title">Wild Horse</div></div>
-          <a href="#" onclick="openModal(); event.stopPropagation(); return false;" class="track-license-btn">License →</a>
+          <div><div class="track-title">Wild Horse <span class="preview-label">Preview</span></div></div>
         </div>
         <div class="track" onclick="playTrack(8)" data-src="https://pub-86f08407ece2488cba6b2b5d1f533af7.r2.dev/09-Winner%27s-Circle.mp3" data-title="Winner's Circle">
           <div class="track-n"><span class="track-num-text">09</span><span class="track-play-icon">▶</span></div>
-          <div><div class="track-title">Winner's Circle</div></div>
-          <a href="#" onclick="openModal(); event.stopPropagation(); return false;" class="track-license-btn">License →</a>
+          <div><div class="track-title">Winner's Circle <span class="preview-label">Preview</span></div></div>
         </div>
         <div class="track" onclick="playTrack(9)" data-src="https://pub-86f08407ece2488cba6b2b5d1f533af7.r2.dev/10-Zero-Bucks-Given.mp3" data-title="Zero Bucks Given">
           <div class="track-n"><span class="track-num-text">10</span><span class="track-play-icon">▶</span></div>
-          <div><div class="track-title">Zero Bucks Given</div></div>
-          <a href="#" onclick="openModal(); event.stopPropagation(); return false;" class="track-license-btn">License →</a>
+          <div><div class="track-title">Zero Bucks Given <span class="preview-label">Preview</span></div></div>
         </div>
       </div>
 
@@ -1766,6 +1751,24 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
               allowfullscreen loading="lazy"></iframe>
           </div>
           <div class="video-caption">Country Style</div>
+        </div>
+        <div class="video-card">
+          <div class="video-frame-wrap">
+            <iframe src="https://www.youtube-nocookie.com/embed/XjN89sOToiE"
+              title="Wild Horse" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-caption">Wild Horse</div>
+        </div>
+        <div class="video-card">
+          <div class="video-frame-wrap">
+            <iframe src="https://www.youtube-nocookie.com/embed/ShO_ZktoFsI"
+              title="Fixing Myself" frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen loading="lazy"></iframe>
+          </div>
+          <div class="video-caption">Fixing Myself</div>
         </div>
       </div>
     </div>
@@ -2009,7 +2012,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
     <button class="player-btn next-btn" onclick="nextTrack()">⏭</button>
     <div class="player-info">
       <div class="player-title" id="playerTitle">—</div>
-      <div class="player-artist">Rowdy Hop</div>
+      <div class="player-artist">Rowdy Hop <span class="preview-label">Preview</span></div>
     </div>
     <div class="player-progress-wrap">
       <span class="player-time" id="playerCurrent">0:00</span>
@@ -2023,8 +2026,37 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
   <script>
     // ── Audio Player ──
     const audio = new Audio();
+    const PREVIEW_SECONDS = 30;
     let currentIndex = -1;
+    let previewLock = false;
     const tracks = document.querySelectorAll('.track');
+
+    function previewLimit() {
+      const full = audio.duration;
+      if (!full || !isFinite(full)) return PREVIEW_SECONDS;
+      return Math.min(PREVIEW_SECONDS, full);
+    }
+
+    function paintProgress() {
+      const limit = previewLimit();
+      const time = Math.min(audio.currentTime || 0, limit);
+      const pct = limit ? (time / limit) * 100 : 0;
+      document.getElementById('playerProgressFill').style.width = pct + '%';
+      document.getElementById('playerCurrent').textContent = formatTime(time);
+      document.getElementById('playerDuration').textContent = formatTime(limit);
+    }
+
+    function endPreview() {
+      if (previewLock) return;
+      previewLock = true;
+      const limit = previewLimit();
+      audio.pause();
+      if (audio.currentTime > limit) audio.currentTime = limit;
+      document.getElementById('playPauseBtn').textContent = '▶';
+      if (currentIndex >= 0) tracks[currentIndex].classList.remove('playing');
+      paintProgress();
+      previewLock = false;
+    }
 
     function playTrack(index) {
       const track = tracks[index];
@@ -2045,11 +2077,13 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       audio.play();
       document.getElementById('playPauseBtn').textContent = '⏸';
       document.getElementById('playerTitle').textContent = title;
+      document.getElementById('playerDuration').textContent = formatTime(PREVIEW_SECONDS);
       document.getElementById('stickyPlayer').classList.add('visible');
     }
 
     function togglePlayPause() {
       if (audio.paused) {
+        if (audio.currentTime >= previewLimit() - 0.05) audio.currentTime = 0;
         audio.play();
         document.getElementById('playPauseBtn').textContent = '⏸';
         if (currentIndex >= 0) tracks[currentIndex].classList.add('playing');
@@ -2079,23 +2113,37 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
     audio.addEventListener('timeupdate', () => {
       if (!audio.duration) return;
-      const pct = (audio.currentTime / audio.duration) * 100;
-      document.getElementById('playerProgressFill').style.width = pct + '%';
-      document.getElementById('playerCurrent').textContent = formatTime(audio.currentTime);
+      if (audio.currentTime >= previewLimit()) {
+        endPreview();
+        return;
+      }
+      paintProgress();
+    });
+
+    audio.addEventListener('seeked', () => {
+      if (audio.currentTime > previewLimit()) endPreview();
+      else paintProgress();
     });
 
     audio.addEventListener('loadedmetadata', () => {
-      document.getElementById('playerDuration').textContent = formatTime(audio.duration);
+      paintProgress();
     });
 
     audio.addEventListener('ended', () => {
-      nextTrack();
+      if (audio.duration && audio.duration <= PREVIEW_SECONDS + 0.05) nextTrack();
     });
 
     function seekAudio(e) {
       const bar = document.getElementById('playerProgressBar');
-      const pct = e.offsetX / bar.offsetWidth;
-      audio.currentTime = pct * audio.duration;
+      const pct = Math.min(1, Math.max(0, e.offsetX / bar.offsetWidth));
+      const limit = previewLimit();
+      const next = pct * limit;
+      if (next >= limit) {
+        audio.currentTime = limit;
+        endPreview();
+        return;
+      }
+      audio.currentTime = next;
     }
   </script>
 </body>
