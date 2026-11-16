@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join the Rowdies | Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: 'Open Sans', sans-serif;
+      background: #1a3a6b;
+      color: #fff;
+    }
+    .landing {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .emblem-panel {
+      background: #1a3a6b;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2.5rem;
+      min-height: 100vh;
+    }
+    .emblem-panel img {
+      width: auto;
+      max-width: min(70%, 320px);
+      max-height: 70vh;
+      height: auto;
+      display: block;
+      object-fit: contain;
+    }
+    .form-panel {
+      background: #c63a3a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 3.5rem;
+    }
+    .form-panel h1 {
+      font-family: 'Anton', sans-serif;
+      font-weight: 400;
+      font-size: clamp(2.4rem, 4.5vw, 3.4rem);
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #E7D67F;
+      line-height: 0.95;
+      margin-bottom: 1.25rem;
+    }
+    .lead, .signup-line {
+      color: #fff;
+      font-size: 17px;
+      line-height: 1.6;
+      max-width: 440px;
+    }
+    .lead { margin-bottom: 0.85rem; }
+    .signup-line { margin-bottom: 1.5rem; }
+    form { max-width: 440px; }
+    label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+    }
+    input {
+      display: block;
+      width: 100%;
+      margin-bottom: 0.85rem;
+      padding: 0.95rem 1rem;
+      background: transparent;
+      border: 2px solid #fff;
+      border-radius: 0;
+      color: #fff;
+      font-family: 'Anton', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    input::placeholder { color: rgba(255,255,255,0.85); }
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 0.95rem 1.1rem;
+      background: #E7D67F;
+      color: #EC7071;
+      border: none;
+      border-radius: 0;
+      font-family: 'Anton', sans-serif;
+      font-size: 1.05rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .note {
+      margin-top: 0.9rem;
+      color: #fff;
+      opacity: 0.6;
+      font-size: 14px;
+    }
+    @media (max-width: 800px) {
+      .landing { grid-template-columns: 1fr; }
+      .emblem-panel { min-height: 280px; padding: 2rem 1.25rem; }
+      .emblem-panel img { max-height: 220px; }
+      .form-panel { padding: 2.5rem 1.5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+  <main class="landing">
+    <div class="emblem-panel">
+      <img src="../join-the-rowdies/fire-horse-emblem.svg" alt="Rowdyland fire horse emblem" />
+    </div>
+    <div class="form-panel">
+      <h1>Join the Rowdies</h1>
+      <p class="lead">This isn't just a list. It's the inside track: merch drops before anyone else, show announcements, unreleased music, and stories from the road. Built for the ones who feel like they're meant for something bigger.</p>
+      <p class="signup-line">Sign up to get exclusive benefits and the latest news first!</p>
+      <form action="#" method="post" onsubmit="return false;">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" placeholder="Name" autocomplete="name" />
+        <label for="email">Email Address</label>
+        <input id="email" name="email" type="email" placeholder="Email Address" autocomplete="email" />
+        <button type="submit">Subscribe <span aria-hidden="true">&rarr;</span></button>
+      </form>
+      <p class="note">We respect your privacy. Unsubscribe at any time.</p>
+    </div>
+  </main>
+</body>
+</html>
