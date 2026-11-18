@@ -1036,9 +1036,97 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
     .about-photo {
       width: 100%;
+      height: 100%;
       display: block;
+      object-fit: cover;
+      aspect-ratio: 1 / 1;
+    }
+
+    .about-gallery {
+      position: relative;
+      width: 100%;
+    }
+    .about-gallery-viewport {
+      overflow: hidden;
       border: 1px solid var(--border);
       box-shadow: 0 0 40px rgba(201,144,26,0.18), 0 10px 40px rgba(0,0,0,0.6);
+      aspect-ratio: 1 / 1;
+      background: var(--black);
+    }
+    .about-gallery-track {
+      display: flex;
+      height: 100%;
+      transition: transform 0.45s ease;
+    }
+    .about-gallery-slide {
+      flex: 0 0 100%;
+      margin: 0;
+    }
+    .about-gallery-prev,
+    .about-gallery-next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      background: rgba(8,8,8,0.72);
+      color: var(--gold2);
+      border: 1px solid var(--gold);
+      cursor: pointer;
+    }
+    .about-gallery-prev { left: 0.7rem; }
+    .about-gallery-next { right: 0.7rem; }
+    .about-gallery-prev:hover,
+    .about-gallery-next:hover {
+      color: var(--gold3);
+      border-color: var(--gold2);
+    }
+    .about-gallery-prev:focus-visible,
+    .about-gallery-next:focus-visible,
+    .about-gallery-dot:focus-visible {
+      outline: 2px solid var(--gold2);
+      outline-offset: 2px;
+    }
+    .about-gallery-dots {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0.7rem;
+      display: flex;
+      justify-content: center;
+      gap: 0.15rem;
+      z-index: 2;
+    }
+    .about-gallery-dot {
+      width: 22px;
+      height: 22px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .about-gallery-dot span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      background: transparent;
+      display: block;
+    }
+    .about-gallery-dot.is-active span {
+      background: var(--gold2);
+      border-color: var(--gold2);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .about-gallery-track { transition: none; }
     }
 
     .about-text p {
@@ -1431,7 +1519,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       .presave-feature .album-art { max-width: min(320px, 78vw); }
       .album-btns { justify-content: center; }
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .about-photo { max-width: 100%; }
+      .about-photo, .about-gallery { max-width: 100%; }
       .about-grid > div:last-child { order: -1; }
       .show { grid-template-columns: 66px 1fr; }
       .tix-btn { grid-column: 1 / -1; text-align: center; }
@@ -1921,8 +2009,27 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
           </div>
         </div>
 
-        <div>
-          <img src="pic square.png" alt="Rowdy Hop" class="about-photo" />
+        <div class="about-gallery" role="region" aria-roledescription="carousel" aria-label="Photos of Rowdy Hop">
+          <div class="about-gallery-viewport">
+            <div class="about-gallery-track">
+              <figure class="about-gallery-slide is-active">
+                <img src="about-barn.jpg" alt="Rowdy Hop in front of barn doors" class="about-photo" width="1200" height="1200" />
+              </figure>
+              <figure class="about-gallery-slide" aria-hidden="true">
+                <img src="about-stage.jpg" alt="Rowdy Hop on stage with drums and neon lights" class="about-photo" width="1200" height="1200" loading="lazy" />
+              </figure>
+            </div>
+          </div>
+          <button type="button" class="about-gallery-prev" aria-label="Previous photo">
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M10.5 3.5L6 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></svg>
+          </button>
+          <button type="button" class="about-gallery-next" aria-label="Next photo">
+            <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M5.5 3.5L10 8l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="square"/></svg>
+          </button>
+          <div class="about-gallery-dots" role="tablist" aria-label="Choose photo">
+            <button type="button" class="about-gallery-dot is-active" aria-label="Show photo 1" aria-current="true"><span></span></button>
+            <button type="button" class="about-gallery-dot" aria-label="Show photo 2"><span></span></button>
+          </div>
         </div>
       </div>
     </div>
@@ -2604,6 +2711,89 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       song.addEventListener('ended', function () { setSoundUi(false); });
 
       tryStartSong();
+    })();
+  </script>
+
+  <script>
+    (function () {
+      var root = document.querySelector('.about-gallery');
+      if (!root) return;
+      var track = root.querySelector('.about-gallery-track');
+      var slides = Array.prototype.slice.call(root.querySelectorAll('.about-gallery-slide'));
+      var prev = root.querySelector('.about-gallery-prev');
+      var next = root.querySelector('.about-gallery-next');
+      var dots = Array.prototype.slice.call(root.querySelectorAll('.about-gallery-dot'));
+      var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var index = 0;
+      var timer = null;
+      var delay = 5000;
+
+      function go(n) {
+        index = (n + slides.length) % slides.length;
+        track.style.transform = 'translateX(' + (-index * 100) + '%)';
+        slides.forEach(function (slide, i) {
+          var on = i === index;
+          slide.classList.toggle('is-active', on);
+          slide.setAttribute('aria-hidden', on ? 'false' : 'true');
+        });
+        dots.forEach(function (dot, i) {
+          var on = i === index;
+          dot.classList.toggle('is-active', on);
+          if (on) dot.setAttribute('aria-current', 'true');
+          else dot.removeAttribute('aria-current');
+        });
+      }
+
+      function stop() {
+        if (timer) {
+          clearInterval(timer);
+          timer = null;
+        }
+      }
+
+      function start() {
+        stop();
+        if (reduceMotion) return;
+        timer = setInterval(function () { go(index + 1); }, delay);
+      }
+
+      function goUser(n) {
+        go(n);
+        start();
+      }
+
+      prev.addEventListener('click', function () { goUser(index - 1); });
+      next.addEventListener('click', function () { goUser(index + 1); });
+      dots.forEach(function (dot, i) {
+        dot.addEventListener('click', function () { goUser(i); });
+      });
+
+      root.addEventListener('mouseenter', stop);
+      root.addEventListener('mouseleave', start);
+      root.addEventListener('focusin', stop);
+      root.addEventListener('focusout', function (e) {
+        if (!root.contains(e.relatedTarget)) start();
+      });
+      root.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowLeft') { e.preventDefault(); goUser(index - 1); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); goUser(index + 1); }
+      });
+
+      var startX = null;
+      root.addEventListener('touchstart', function (e) {
+        startX = e.changedTouches[0].clientX;
+        stop();
+      }, { passive: true });
+      root.addEventListener('touchend', function (e) {
+        if (startX == null) return;
+        var dx = e.changedTouches[0].clientX - startX;
+        startX = null;
+        if (Math.abs(dx) > 40) goUser(index + (dx < 0 ? 1 : -1));
+        else start();
+      }, { passive: true });
+
+      go(0);
+      start();
     })();
   </script>
 </body>
