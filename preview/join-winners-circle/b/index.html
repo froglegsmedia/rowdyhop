@@ -32,7 +32,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
   <meta name="twitter:description" content="Born in the backwoods of Southern Louisiana and forged on the concrete of Los Angeles. Debut album out now." />
   <meta name="twitter:image" content="https://rowdyhop.com/rowdyhop-album.jpg" />
   <title>Rowdy Hop | Official Website</title>
-  <link rel="icon" href="../../american horse.png" type="image/png" />
+  <link rel="icon" href="../../../american horse.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Rye&family=Alfa+Slab+One&family=Teko:wght@600;700&family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -175,7 +175,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       content: '';
       position: absolute;
       inset: 0;
-      background: url('../../rainbow pic.jpg') center center / cover no-repeat;
+      background: url('../../../rainbow pic.jpg') center center / cover no-repeat;
       opacity: 0.28;
       z-index: 0;
     }
@@ -1107,8 +1107,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
     }
 
     .wc-horse {
-      background: #1a3a6b;
-      position: relative;
+      background: #090909;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1118,15 +1117,16 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
     .wc-horse-img {
       width: auto;
-      max-width: min(80%, 360px);
-      max-height: 360px;
-      height: auto;
+      height: 420px;
+      max-width: 78%;
       display: block;
       object-fit: contain;
     }
 
     .wc-content {
-      background: #C63A2A;
+      background:
+        radial-gradient(ellipse at 85% 0%, rgba(255, 176, 72, 0.22), transparent 48%),
+        linear-gradient(165deg, #e06a22 0%, #c13a16 36%, #8d1c12 70%, #2a0908 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -1201,9 +1201,14 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
     @media (max-width: 700px) {
       .wc-section { grid-template-columns: 1fr; }
-      .wc-horse { min-height: 300px; }
-      .wc-horse-img { max-height: 260px; }
+      .wc-horse { min-height: 340px; }
+      .wc-horse-img { height: 280px; max-width: 70%; }
       .wc-content { padding: 3rem 2rem; }
+    }
+
+
+    .wc-alt-b .wc-content {
+      background: linear-gradient(180deg, #4a0f12 0%, #2a0708 100%);
     }
 
     /* ─── LICENSING MODAL ─── */
@@ -1471,7 +1476,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
   <!-- ═══ NAV ═══ -->
   <nav>
     <a class="nav-logo-wrap" href="#hero">
-      <img class="nav-logo-img" src="../../rowdyhop-logo.png" alt="Rowdy Hop" />
+      <img class="nav-logo-img" src="../../../rowdyhop-logo.png" alt="Rowdy Hop" />
     </a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#merch" onclick="closeMenu()">Merch</a></li>
@@ -1508,7 +1513,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
     <!-- Full hero logo — real PNG -->
     <div class="hero-logo-wrap">
-      <img class="hero-logo-img" src="../../rowdyhop-logo.png" alt="Rowdy Hop" />
+      <img class="hero-logo-img" src="../../../rowdyhop-logo.png" alt="Rowdy Hop" />
     </div>
 
     <div class="hero-presave">
@@ -1556,7 +1561,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       <div class="album-feature presave-feature">
         <div class="album-art-block">
           <div class="album-art">
-            <img src="../../country-style.jpg" alt="Country Style single cover by Rowdy Hop" />
+            <img src="../../../country-style.jpg" alt="Country Style single cover by Rowdy Hop" />
           </div>
         </div>
         <div>
@@ -1646,7 +1651,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       <div class="album-feature">
         <div class="album-art-block">
           <div class="album-art">
-            <img src="../../rowdyhop-album.jpg" alt="Stable to Stage — Rowdy Hop" />
+            <img src="../../../rowdyhop-album.jpg" alt="Stable to Stage — Rowdy Hop" />
           </div>
         </div>
         <div>
@@ -1832,21 +1837,21 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
         </div>
 
         <div>
-          <img src="../../pic square.png" alt="Rowdy Hop" class="about-photo" />
+          <img src="../../../pic square.png" alt="Rowdy Hop" class="about-photo" />
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ═══ JOIN THE ROWDIES ═══ -->
-  <div class="wc-section">
+  <!-- ═══ WINNER'S CIRCLE ═══ -->
+  <div class="wc-section wc-alt-b">
     <div class="wc-horse">
-      <img src="fire-horse-emblem.svg" alt="Rowdyland fire horse emblem" class="wc-horse-img" />
+      <img src="../fire-horse-emblem.svg" alt="Rowdyland fire horse emblem" class="wc-horse-img" />
     </div>
     <div class="wc-content">
-      <div class="wc-eyebrow">&#9733; Exclusive Access &#9733;</div>
-      <h2 class="wc-title">Join the<br>Rowdies</h2>
-      <p class="wc-desc">This isn't just a list. It's the inside track: merch drops before anyone else, show announcements, unreleased music, and stories from the road. Built for the ones who feel like they're meant for something bigger.</p>
+      <div class="wc-eyebrow">&#9733; The Inner Circle &#9733;</div>
+      <h2 class="wc-title">Join the<br>Winner's Circle</h2>
+      <p class="wc-desc">This isn't a list. It's the herd. Merch drops before anyone else, show announcements, unreleased music, and stories from the road. For the ones who rise from the fire.</p>
       <a href="https://join.rowdyhop.com/" target="_blank" class="wc-btn">Get In &rarr;</a>
     </div>
   </div>
@@ -1854,7 +1859,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
   <!-- ═══ FOOTER ═══ -->
   <footer>
     <div class="footer-logo-wrap">
-      <img src="../../rowdyhop-logo.png" alt="Rowdy Hop" style="height:auto;width:min(200px,80vw);" />
+      <img src="../../../rowdyhop-logo.png" alt="Rowdy Hop" style="height:auto;width:min(200px,80vw);" />
     </div>
     <div class="footer-stars">★ ★ ★ ★ ★</div>
     <p style="margin-bottom:1rem;">
