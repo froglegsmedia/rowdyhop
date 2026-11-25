@@ -270,30 +270,6 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
     .hero-social-link:hover { color: var(--gold2); }
 
-    .hero-sound {
-      position: relative;
-      z-index: 2;
-      margin-top: 1.75rem;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.55rem;
-      padding: 0.75rem 1.15rem;
-      background: rgba(8,8,8,0.62);
-      color: var(--gold2);
-      border: 1px solid var(--gold);
-      font-family: 'Inter', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 800;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      line-height: 1;
-      cursor: pointer;
-    }
-    .hero-sound:hover { color: var(--gold3); border-color: var(--gold2); }
-    .hero-sound-icon { width: 18px; height: 18px; display: block; flex: 0 0 auto; }
-    .hero-sound.is-playing .hero-sound-on { display: none; }
-    .hero-sound:not(.is-playing) .hero-sound-off { display: none; }
 
     /* ─── BUTTONS ─── */
     .btn {
@@ -1590,14 +1566,6 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       .hero-social-icon { font-size: 1.1rem; }
       .hero-btns .btn { width: 100%; max-width: 280px; }
       .hero-socials { gap: 1rem; }
-      .hero-sound {
-        margin-top: 1.35rem;
-        width: 100%;
-        max-width: 320px;
-        min-height: 44px;
-        font-size: 0.62rem;
-        letter-spacing: 0.12em;
-      }
 
       /* Sections */
       .section-inner { padding: 4rem 1.25rem; }
@@ -1677,12 +1645,12 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
     <div class="hero-presave">
       <p class="hero-presave-kicker">New Single · Out Now</p>
-      <a href="https://ditto.fm/country-style-rowdy-hop" target="_blank" rel="noopener" class="btn btn-gold btn-presave">Stream Country Style</a>
+      <a href="https://ditto.fm/country-style-rowdy-hop" target="_blank" rel="noopener" class="btn btn-gold btn-presave">Play Country Style</a>
     </div>
 
 <div class="hero-ctas">
       <a href="#merch"  class="btn btn-gold">Shop Merch</a>
-      <a href="#music"  class="btn btn-outline">License Music</a>
+      <a href="#music"  class="btn btn-outline">Listen</a>
       <a href="#shows"  class="btn btn-outline">Get Tickets</a>
     </div>
 
@@ -1713,16 +1681,6 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
       </a>
     </div>
 
-    <button type="button" class="hero-sound" id="heroSound" aria-pressed="false" aria-label="Play Country Style">
-      <svg class="hero-sound-icon hero-sound-on" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4zm11.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 15.5 12zM13 3.23v2.06a6.99 6.99 0 0 1 0 13.42v2.06A9 9 0 0 0 13 3.23z"/>
-      </svg>
-      <svg class="hero-sound-icon hero-sound-off" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4zm13.59 3L20 9.59 18.41 8 16 10.41 13.59 8 12 9.59 14.41 12 12 14.41 13.59 16 16 13.59 18.41 16 20 14.41 17.59 12z"/>
-      </svg>
-      <span class="hero-sound-label">Play Country Style</span>
-    </button>
-    <audio id="heroSong" preload="auto" src="assets/audio/country-style.mp3"></audio>
   </section>
 
   <!-- ═══ NEW SINGLE: COUNTRY STYLE ═══ -->
@@ -2704,9 +2662,6 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
   <script>
     (function () {
       var video = document.querySelector('.hero-video');
-      var song = document.getElementById('heroSong');
-      var button = document.getElementById('heroSound');
-      var label = button.querySelector('.hero-sound-label');
       var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       if (video) {
@@ -2720,34 +2675,6 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
           if (started && started.catch) started.catch(function () {});
         }
       }
-
-      function setSoundUi(playing) {
-        button.classList.toggle('is-playing', playing);
-        button.setAttribute('aria-pressed', playing ? 'true' : 'false');
-        button.setAttribute('aria-label', playing ? 'Mute' : 'Play Country Style');
-        label.textContent = playing ? 'Mute' : 'Play Country Style';
-      }
-
-      function tryStartSong() {
-        var pending = song.play();
-        if (pending && pending.then) {
-          pending.then(function () { setSoundUi(!song.paused); }).catch(function () { setSoundUi(false); });
-        } else {
-          setSoundUi(!song.paused);
-        }
-      }
-
-      button.addEventListener('click', function () {
-        if (song.paused) tryStartSong();
-        else {
-          song.pause();
-          setSoundUi(false);
-        }
-      });
-
-      song.addEventListener('ended', function () { setSoundUi(false); });
-
-      tryStartSong();
     })();
   </script>
 
