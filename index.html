@@ -323,11 +323,21 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
     }
 
     .btn-presave {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
       padding: 1.05rem 2.4rem;
       font-size: 0.78rem;
       letter-spacing: 0.16em;
       box-shadow: 0 0 0 1px rgba(245,208,106,0.45), 0 0 28px rgba(232,184,75,0.55);
       animation: presave-glow 2.2s ease-in-out infinite;
+    }
+    .btn-presave-icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 auto;
+      display: block;
     }
 
     @keyframes presave-glow {
@@ -1557,6 +1567,7 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
         padding: 0.95rem 1rem;
         white-space: nowrap;
       }
+      .btn-presave-icon { width: 16px; height: 16px; }
       .presave-section .section-wrap { padding: 2rem 1.25rem; }
       .hero-tagline { font-size: 0.75rem; }
       .hero-sub { font-size: 0.82rem; }
@@ -1645,7 +1656,12 @@ if(/shop\.rowdyhop\.com/.test(h)){fbq('trackCustom','ClickShop',{url:h});gtag('e
 
     <div class="hero-presave">
       <p class="hero-presave-kicker">New Single · Out Now</p>
-      <a href="https://ditto.fm/country-style-rowdy-hop" target="_blank" rel="noopener" class="btn btn-gold btn-presave">Play Country Style</a>
+      <a href="https://ditto.fm/country-style-rowdy-hop" target="_blank" rel="noopener" class="btn btn-gold btn-presave">
+        <svg class="btn-presave-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M4 9v6h4l5 4V5L8 9H4zm11.5 3a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 15.5 12zM13 3.23v2.06a6.99 6.99 0 0 1 0 13.42v2.06A9 9 0 0 0 13 3.23z"/>
+        </svg>
+        Play Country Style
+      </a>
     </div>
 
 <div class="hero-ctas">
